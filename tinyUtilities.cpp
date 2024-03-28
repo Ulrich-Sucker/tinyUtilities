@@ -28,7 +28,6 @@ int arr_length(int arr[])
     int count = 0;
     for(i=0; arr[i]!='\0'; i++)
     {
-        
 		std::cout << arr[i]  << std::endl;
 		count++;
     }
