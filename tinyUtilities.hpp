@@ -7,13 +7,14 @@
 //   - Base
 // -------------------------------------------------------------------------------------
 
-#define tinyUtilities_hpp_Version "00.01.008"
+#define tinyUtilities_hpp_Version "00.01.009"
 
 // =====================================================================================
 #pragma endregion
 
-#pragma once
+
 // ---- include public libs ------------------------------------------------------------ */
+#pragma once
 #include <iostream>
 #include <string>
 #include <algorithm> 

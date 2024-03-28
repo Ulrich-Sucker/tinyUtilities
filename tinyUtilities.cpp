@@ -6,18 +6,13 @@
 // 	Version 00.00 - 2024-02-27
 //   - Base
 // -------------------------------------------------------------------------------------
-#define tinyUtilities_cpp_Version "00.00.005"
+#define tinyUtilities_cpp_Version "00.00.006"
 
 // =====================================================================================
 #pragma endregion
 
-#pragma once
-
-// ---- include public libs ------------------------------------------------------------ */
-#include <iostream>
-#include <string>
-
 // ---- include local libs ------------------------------------------------------------- */
+#pragma once
 #include "tinyUtilities.hpp"
 
 
@@ -65,7 +60,7 @@ int* convCSV2arr(std::string list)
 		restStr = restStr.substr(pointer+1, restStr.length());
 
 		array[i] = stoi(value);
-		std:: cout << i << ":\t" << array[i] << std::endl;
+		//** std:: cout << i << ":\t" << array[i] << std::endl;
 	}
 	return array;
 }
@@ -74,9 +69,8 @@ int* convCSV2arr(std::string list)
 // ==== FUNCTION: parseCommLineArgs ====================================================
 bool parseCommLineArgs(int argumentCount, char *argValues[])
 {
-
-
-    std::cout << "argumentCount:\t" << argumentCount << std::endl;
+	int* argList;
+/*
     // Walk through list of strings until a NULL is encountered.
 	for ( int i = 1; argValues[i] != NULL; ++i )
 	{
@@ -84,19 +78,7 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 		std::cout << i << ": ";        // Prefix with numbers if /n specified
 		std::cout << argValues[i] << "\n";
 	}
-
-
-	std::string val = "1,22,123,2134,23543";
-	int* argList = convCSV2arr(val);
-	//int* argList = convCSV2arr("1,22,123,2134,23543");
-	int length = argList[0];
-	length = arr_length(argList);
-
-	std::cout << argList[3] << std::endl;
-
-
-
-
+*/
     bool numberLines = false;    // Default is no line numbers.
     if (argumentCount > 0)
 	{ 
@@ -105,10 +87,6 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 		// Walk through list of strings until a NULL is encountered.
 		for ( int i = 1; argValues[i] != NULL; ++i )
 		{
-			// ---- to be deleted ------------------------------------------------------
-			//std::cout << i << ": ";        // Prefix with numbers if /n specified
-			//std::cout << argValues[i] << "\n";
-
 			std::string OptionStr = (std::string)argValues[i];
 			std::string OptionVal;
 			transform(OptionStr.begin(), OptionStr.end(), OptionStr.begin(), ::toupper); 
@@ -116,13 +94,15 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 			// ---- [ -COM=13 ] --------------------------------------------------------
 			if (OptionStr.find("-COM") == 0) {
 				OptionVal = OptionStr.substr(5, OptionStr.length());
-				std::cout << "COM-Port:\t" << OptionVal << std::endl; 
+				// std::cout << "COM-Port:\t" << OptionVal << std::endl; 
+				portNameNew = OptionVal;
 			}
 			
 			// ---- [ -BAUD=57600 ] -----------------------------------------------------
 			if (OptionStr.find("-BAUD") == 0) {
 				OptionVal = OptionStr.substr(6, OptionStr.length());
-				std::cout << "Baudrate:\t" << OptionVal << std::endl; 
+				// std::cout << "Baudrate:\t" << OptionVal << std::endl; 
+				baudRateNew = OptionVal;
 			}
 
 			// ---- [ -ALL ] -----------------------------------------------------------
@@ -135,7 +115,7 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 				// ---- "-SHORT=0,1,21" ------------------------------------------------
 				if (OptionStr.length() > 6) {
 					OptionVal = OptionStr.substr(7, OptionStr.length());
-					std::cout << "Short:\t\t" << OptionVal << std::endl;
+					//std::cout << "Short:\t\t" << OptionVal << std::endl;
 					
 					argList = convCSV2arr(OptionVal);
 					for ( int i = 1; i <= argList[0]; i++ ){
@@ -157,11 +137,8 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 			if (OptionStr.find("-LONG") == 0) {
 				// ---- "-LONG=0,1,21,23" ------------------------------------------------
 				if (OptionStr.length() > 5) {
-					OptionVal = OptionStr.substr(6, OptionStr.length());
-					std::cout << "Long:\t\t" << OptionVal << std::endl;
-				
+					OptionVal = OptionStr.substr(6, OptionStr.length());				
 					argList = convCSV2arr(OptionVal);
-
 					for ( int i = 1; i <= argList[0]; i++ ){
 						mavMessages[argList[i]].printLong = true;
 					}
