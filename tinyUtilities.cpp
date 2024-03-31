@@ -6,13 +6,13 @@
 // 	Version 00.00 - 2024-02-27
 //   - Base
 // -------------------------------------------------------------------------------------
-#define tinyUtilities_cpp_Version "00.00.006"
+#define tinyUtilities_cpp_Version "00.00.007"
 
 // =====================================================================================
 #pragma endregion
 
 // ---- include local libs ------------------------------------------------------------- */
-#pragma once
+//#pragma once
 #include "tinyUtilities.hpp"
 
 
@@ -91,30 +91,30 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 			std::string OptionVal;
 			transform(OptionStr.begin(), OptionStr.end(), OptionStr.begin(), ::toupper); 
 	
-			// ---- [ -COM=13 ] --------------------------------------------------------
-			if (OptionStr.find("-COM") == 0) {
-				OptionVal = OptionStr.substr(5, OptionStr.length());
+			// ---- [ --COM=13 ] --------------------------------------------------------
+			if (OptionStr.find("--COM") == 0) {
+				OptionVal = OptionStr.substr(6, OptionStr.length());
 				// std::cout << "COM-Port:\t" << OptionVal << std::endl; 
 				portNameNew = OptionVal;
 			}
 			
-			// ---- [ -BAUD=57600 ] -----------------------------------------------------
-			if (OptionStr.find("-BAUD") == 0) {
-				OptionVal = OptionStr.substr(6, OptionStr.length());
+			// ---- [ --BAUD=57600 ] -----------------------------------------------------
+			if (OptionStr.find("--BAUD") == 0) {
+				OptionVal = OptionStr.substr(7, OptionStr.length());
 				// std::cout << "Baudrate:\t" << OptionVal << std::endl; 
 				baudRateNew = OptionVal;
 			}
 
-			// ---- [ -ALL ] -----------------------------------------------------------
-			if (OptionStr.find("-ALL") == 0) {
+			// ---- [ --ALL ] -----------------------------------------------------------
+			if (OptionStr.find("--ALL") == 0) {
 				std::cout << "Display:\tAll Messages" << std::endl; 
 			}
 
-			// ---- [ -SHORT=0,1,21 ] --------------------------------------------------
-			if (OptionStr.find("-SHORT") == 0) {
+			// ---- [ --SHORT=0,1,21 ] --------------------------------------------------
+			if (OptionStr.find("--SHORT") == 0) {
 				// ---- "-SHORT=0,1,21" ------------------------------------------------
-				if (OptionStr.length() > 6) {
-					OptionVal = OptionStr.substr(7, OptionStr.length());
+				if (OptionStr.length() > 7) {
+					OptionVal = OptionStr.substr(8, OptionStr.length());
 					//std::cout << "Short:\t\t" << OptionVal << std::endl;
 					
 					argList = convCSV2arr(OptionVal);
@@ -123,7 +123,7 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 					}
 				}
 
-				// ---- "-SHORT" -------------------------------------------------------
+				// ---- "--SHORT" -------------------------------------------------------
 				else {
 					std::cout << "Short\t\tAll Messages" << std::endl;
 					// all short true
@@ -133,18 +133,18 @@ bool parseCommLineArgs(int argumentCount, char *argValues[])
 				}
 			}
 
-			// ---- [ -LONG=0,1,21,23 ] ----------------------------------------------------
-			if (OptionStr.find("-LONG") == 0) {
+			// ---- [ --LONG=0,1,21,23 ] ----------------------------------------------------
+			if (OptionStr.find("--LONG") == 0) {
 				// ---- "-LONG=0,1,21,23" ------------------------------------------------
-				if (OptionStr.length() > 5) {
-					OptionVal = OptionStr.substr(6, OptionStr.length());				
+				if (OptionStr.length() > 6) {
+					OptionVal = OptionStr.substr(7, OptionStr.length());				
 					argList = convCSV2arr(OptionVal);
 					for ( int i = 1; i <= argList[0]; i++ ){
 						mavMessages[argList[i]].printLong = true;
 					}
 				}
 
-				// ---- "-LONG" -------------------------------------------------------
+				// ---- "--LONG" -------------------------------------------------------
 				else {
 					std::cout << "Long:\t\tAll Messages" << std::endl;
 					// all Long true
